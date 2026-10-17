@@ -1,6 +1,6 @@
 # Launch notes
 
-This document is a release checklist and a set of editable announcement drafts. It does not imply that a GitHub repository, package, release, or hosted demo has already been published.
+This document covers subsequent updates and provides editable announcement drafts. The public repository is [qsxustc/backoff-lab](https://github.com/qsxustc/backoff-lab), and the demo's permanent address is [qsxustc.github.io/backoff-lab](https://qsxustc.github.io/backoff-lab/). Check the [Pages deployment workflow](https://github.com/qsxustc/backoff-lab/actions/workflows/pages.yml) and open the demo to confirm the latest deployment before announcing an update.
 
 ## Positioning
 
@@ -12,7 +12,7 @@ The audience is backend engineers, SREs, distributed-systems learners, and peopl
 
 Retry visualizations and simulators already exist. Link the [related work in the README](../README.md#background-and-related-work), explain this project's scope, and emphasize the inspectable client histories and portable experiments. Avoid claims of being the first, promises of GitHub stars, or production performance claims derived from one synthetic run.
 
-## Prepare a release
+## Publish an update
 
 1. Run `npm test` and `npm run build` from the repository root.
 2. Run `npm run preview`, then check the default scenario, an imported scenario, a shared link, keyboard controls, and a narrow viewport.
@@ -20,12 +20,12 @@ Retry visualizations and simulators already exist. Link the [related work in the
 4. Review the English and Chinese READMEs, license, contribution guide, and model description.
 5. Capture the actual app as `assets/demo.jpg`. Keep the screenshot's numbers consistent with its visible seed and parameters.
 6. Review the staged files and ensure only this project is included. Do not include local reports, credentials, unrelated workspace content, or build artifacts.
-7. Create a public GitHub repository under the intended owner, add its real URL as the Git remote, and push the reviewed commits.
-8. Set the description to the one-sentence pitch. Suggested topics: `backoff`, `retry`, `jitter`, `distributed-systems`, `simulation`, `visualization`, `sre`, `javascript`.
-9. Publish `dist/` using the chosen static host. For GitHub Pages, use the repository's deployment workflow if provided, configure Pages to use GitHub Actions, and run the deployment. Verify the resulting URL before adding it to the repository's Website field or README.
-10. Create a release with the implemented features, model boundaries, and reproducible example. Confirm any package name's availability before considering npm publication.
+7. Push reviewed commits to `main` in [qsxustc/backoff-lab](https://github.com/qsxustc/backoff-lab). The [CI workflow](https://github.com/qsxustc/backoff-lab/actions/workflows/ci.yml) checks Node.js 20, 22, and 24.
+8. A push to `main` automatically starts the [Pages workflow](https://github.com/qsxustc/backoff-lab/actions/workflows/pages.yml), which runs tests, builds `dist/`, and deploys it. Pages uses GitHub Actions as its source. The workflow also supports a manual run for redeployment.
+9. Wait for the deployment to succeed, then verify the [online demo](https://qsxustc.github.io/backoff-lab/), including a copied experiment link. A successful build alone does not confirm that the hosted app works.
+10. For a versioned release, create a tag and GitHub release describing the implemented features, model boundaries, and reproducible example. Confirm any package name's availability before considering npm publication.
 
-The local CLI already works with `node bin/backoff-lab.js`; no npm publication is required for a useful first release. Add real clone commands, badges, and demo links only after their targets exist.
+The local CLI works with `node bin/backoff-lab.js`; it does not require npm publication. Keep the repository description aligned with the one-sentence pitch and its Website field set to the demo address. Suggested topics: `backoff`, `retry`, `jitter`, `distributed-systems`, `simulation`, `visualization`, `sre`, `javascript`.
 
 ## A short demo recording
 
@@ -50,7 +50,9 @@ The model is deliberately small: a finite burst, concurrent server slots, fixed 
 
 I'd appreciate feedback on which retry interactions are hardest to explain, and whether the client timeline makes them easier to see.
 
-Before posting, append the verified repository and demo links. This is a draft; nothing has been posted automatically.
+[Try the demo](https://qsxustc.github.io/backoff-lab/) · [Source on GitHub](https://github.com/qsxustc/backoff-lab)
+
+This is an editable draft; nothing has been posted automatically. Verify the current deployment before posting.
 
 ## 中文宣传草稿
 
@@ -64,7 +66,9 @@ Backoff Lab 可以让一批客户端同时访问正在恢复的服务，对比�
 
 欢迎分享你在排查重试问题时遇到的难点，或提供一个值得放进示例库的场景。
 
-发布前补上已验证的仓库与演示链接。这是可编辑草稿，尚未对外发送。
+[在线体验](https://qsxustc.github.io/backoff-lab/) · [GitHub 源码](https://github.com/qsxustc/backoff-lab)
+
+这是可编辑草稿，尚未对外发送。对外发布前请确认当前部署已成功且 Demo 可访问。
 
 ## After release
 

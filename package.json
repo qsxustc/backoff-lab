@@ -33,5 +33,13 @@
     "distributed-systems",
     "simulator",
     "thundering-herd"
-  ]
+  ],
+  "homepage": "https://qsxustc.github.io/backoff-lab/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qsxustc/backoff-lab.git"
+  },
+  "bugs": {
+    "url": "https://github.com/qsxustc/backoff-lab/issues"
+  }
 }

@@ -2,7 +2,7 @@
 
 **看见每一次重试，理解惊群效应。**
 
-[English](README.md) · [模拟模型](docs/model.md) · [贡献指南](CONTRIBUTING.md)
+[在线 Demo](https://qsxustc.github.io/backoff-lab/) · [GitHub 仓库](https://github.com/qsxustc/backoff-lab) · [CI 状态](https://github.com/qsxustc/backoff-lab/actions/workflows/ci.yml) · [English](README.md) · [模拟模型](docs/model.md) · [贡献指南](CONTRIBUTING.md)
 
 Backoff Lab 是一个交互式的重试策略显微镜：让几百个客户端同时面对一个正在恢复的服务，对比五种重试策略，再选中一个客户端，追踪它从首次失败到最终结果的完整过程。
 
@@ -14,9 +14,10 @@ Backoff Lab 是一个交互式的重试策略显微镜：让几百个客户端�
 
 ## 本地运行
 
-需要 **Node.js 20 或更新版本**以及现代浏览器。下载或克隆本仓库后进入项目目录：
+直接打开 **[在线 Demo](https://qsxustc.github.io/backoff-lab/)** 即可体验，无需安装。如需本地运行，准备 **Node.js 20 或更新版本**以及现代浏览器：
 
 ```sh
+git clone https://github.com/qsxustc/backoff-lab.git
 cd backoff-lab
 npm run dev
 ```
@@ -37,7 +38,7 @@ npm run dev -- --port 4174
 4. 尝试 **Retry-After**，或将首次请求分散到一段时间内。结合完成数量一起看延迟。
 5. 复制实验链接，或导出场景 JSON，稍后复现。
 
-分享链接将场景保存在 URL 的 fragment 中。接收者需要能访问同一个应用地址；指向 `127.0.0.1` 的链接只适用于运行该服务的本机。应用部署前，可以通过 JSON 场景文件交换实验。
+分享链接将场景保存在 URL 的 fragment 中。在[在线 Demo](https://qsxustc.github.io/backoff-lab/)中点击 **Copy experiment link**，即可生成别人能直接打开的实验链接。从 `127.0.0.1` 复制的链接需要接收者也运行本地服务；本地应用与在线 Demo 之间可以通过导出、导入 JSON 场景文件交换实验。
 
 链接保存场景参数与随机种子。对比策略、当前选中的客户端和回放位置属于本地视图设置，不包含在分享链接中。
 
@@ -107,6 +108,8 @@ npm run preview
 ```
 
 `build` 在 `dist/` 生成静态站点，可部署到支持子路径的静态托管服务，例如 GitHub Pages。`preview` 默认在 `http://127.0.0.1:4173` 预览构建产物；请先停止开发服务，或传入其他 `--port`。
+
+推送到 `main` 分支会触发 [GitHub Pages 部署工作流](https://github.com/qsxustc/backoff-lab/actions/workflows/pages.yml)，通过测试和构建后自动更新在线 Demo，也可以在 Actions 中手动运行该工作流。
 
 | 路径 | 用途 |
 | --- | --- |

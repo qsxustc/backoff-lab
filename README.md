@@ -2,7 +2,7 @@
 
 **See every retry. Understand the thundering herd.**
 
-[简体中文](README.zh-CN.md) · [Simulation model](docs/model.md) · [Contributing](CONTRIBUTING.md)
+[Live demo](https://qsxustc.github.io/backoff-lab/) · [GitHub](https://github.com/qsxustc/backoff-lab) · [CI](https://github.com/qsxustc/backoff-lab/actions/workflows/ci.yml) · [简体中文](README.zh-CN.md) · [Simulation model](docs/model.md) · [Contributing](CONTRIBUTING.md)
 
 Backoff Lab is an interactive microscope for retry policies. Put hundreds of clients in front of one recovering service, compare five ways to try again, and follow an individual request from its first failure to its final outcome.
 
@@ -12,9 +12,10 @@ The browser app, command-line tool, and exported results use the same determinis
 
 ## Try it locally
 
-Requires **Node.js 20 or newer** and a modern browser. After downloading or cloning this repository, enter its directory:
+Open the **[online demo](https://qsxustc.github.io/backoff-lab/)** to try the app without installing anything. To run it locally, use **Node.js 20 or newer** and a modern browser:
 
 ```sh
+git clone https://github.com/qsxustc/backoff-lab.git
 cd backoff-lab
 npm run dev
 ```
@@ -35,7 +36,7 @@ npm run dev -- --port 4174
 4. Try **Retry-After**, or spread the initial arrivals. Read completion count alongside latency.
 5. Copy the experiment link or export the scenario to reproduce it later.
 
-A shared link contains the scenario in its URL fragment. Someone else needs access to the same app origin; a link to `127.0.0.1` works only on the machine running that server. A JSON scenario is the portable option before deploying the app.
+A shared link contains the scenario in its URL fragment. Use **Copy experiment link** in the [online demo](https://qsxustc.github.io/backoff-lab/) to share a link others can open directly. A link copied from `127.0.0.1` works only on a machine running the local server; export a JSON scenario to move experiments between the local app and online demo.
 
 Links preserve the scenario parameters and seed. Policy selections, the selected client, and replay position are local view settings and are not included.
 
@@ -107,6 +108,8 @@ npm run preview
 ```
 
 `build` creates a static site in `dist/`. It can be served under a subdirectory by a static host, including GitHub Pages. `preview` serves that build at `http://127.0.0.1:4173`; stop the development server first or pass a different `--port`.
+
+Pushes to `main` run the [GitHub Pages deployment workflow](https://github.com/qsxustc/backoff-lab/actions/workflows/pages.yml), which tests and builds the app before updating the online demo. The workflow can also be run manually.
 
 | Path | Purpose |
 | --- | --- |
