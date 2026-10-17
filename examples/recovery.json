@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "clients": 120,
+  "outageMs": 1500,
+  "capacity": 12,
+  "latencyMs": 180,
+  "failureLatencyMs": 60,
+  "baseDelayMs": 180,
+  "maxDelayMs": 4000,
+  "maxAttempts": 10,
+  "deadlineMs": 15000,
+  "spreadMs": 0,
+  "seed": 42,
+  "retryAfterMs": 0,
+  "respectRetryAfter": false
+}

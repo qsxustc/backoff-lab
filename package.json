@@ -1,0 +1,37 @@
+{
+  "name": "backoff-lab",
+  "version": "1.0.0",
+  "description": "See the thundering herd. Compare retry and backoff strategies in a deterministic, local-first simulator.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "backoff-lab": "./bin/backoff-lab.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node scripts/serve.js",
+    "build": "node scripts/build.js",
+    "preview": "node scripts/serve.js --dist",
+    "test": "node --test"
+  },
+  "files": [
+    "bin/",
+    "src/simulator.js",
+    "README.md",
+    "README.zh-CN.md",
+    "CONTRIBUTING.md",
+    "docs/",
+    "examples/",
+    "LICENSE"
+  ],
+  "keywords": [
+    "backoff",
+    "retry",
+    "jitter",
+    "distributed-systems",
+    "simulator",
+    "thundering-herd"
+  ]
+}

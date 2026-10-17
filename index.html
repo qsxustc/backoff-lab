@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f2">
+  <meta name="description" content="See every retry. A local, deterministic playground for exponential backoff, jitter, deadlines, and Retry-After. Inspect the attempts, compare the tradeoffs, share the experiment.">
+  <title>Backoff Lab — See every retry</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <header class="site-header wrap">
+    <a class="brand" href="./" aria-label="Backoff Lab home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>backoff<span class="brand-light">lab</span><span class="version">v1.0</span></a>
+    <nav aria-label="Project"><span class="local-badge"><span></span> runs locally in your browser</span><a href="./docs/model.md">The model <span aria-hidden="true">↗</span></a><a href="./README.md">Readme <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main class="wrap">
+    <section class="intro">
+      <div><p class="eyebrow">THE RETRY POLICY MICROSCOPE</p><h1>Your retries have a rhythm.<br><em>See what hits the server.</em></h1><p class="intro-copy">One recovering service. Hundreds of waiting clients. Explore how a little randomness changes the next request — and the whole recovery.</p></div>
+      <div class="intro-aside"><span class="mini-label">A SMALL, HONEST EXPERIMENT</span><p>Same arrivals. Same service.<br>Five ways to try again.</p><span class="aside-rule"></span><span class="mono">deterministic · no requests sent</span></div>
+    </section>
+    <section class="experiment-bar" aria-label="Experiment presets"><div class="presets"><span class="mini-label">START WITH</span><div id="presets"></div></div><div class="file-actions"><button id="import-button" class="text-button">↑ Import</button><input type="file" id="import-file" accept=".json,application/json" hidden><button id="export-scenario" class="text-button">↓ Scenario</button><button id="share" class="button button-dark">Copy experiment link <span aria-hidden="true">↗</span></button></div></section>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+    <div class="workspace">
+      <aside class="control-panel panel">
+        <div class="panel-heading"><h2>The experiment</h2><button id="reset" class="text-button">Reset</button></div>
+        <p class="panel-copy">Change one thing. Watch the tradeoff.</p>
+        <form id="scenario-form"><div id="primary-controls"></div><details class="advanced"><summary>Fine-tune the policy <span>+</span></summary><div id="advanced-controls"></div><label class="check-label"><input id="respectRetryAfter" type="checkbox"> Honor Retry-After</label><p class="field-note">Wait at least the server hint after each failure. Applies to every policy.</p><label class="number-field" for="retryAfterMs"><span>Retry-After (ms)</span><input id="retryAfterMs" type="number" min="0" max="30000" step="10"></label><label class="number-field" for="seed"><span>Random seed</span><input id="seed" type="number" min="0" max="4294967295" step="1"></label></details></form>
+        <div class="model-note"><span class="status-dot"></span><div><strong>A simulation, with boundaries.</strong><p>A single burst, fixed service time, fast failures. No real traffic, queues, or production predictions. <a href="./docs/model.md">See assumptions ↗</a></p></div></div>
+      </aside>
+      <div class="results">
+        <section class="comparison-heading"><div><p class="eyebrow">01 / THE BIG PICTURE</p><h2>Same incident. Different recovery.</h2></div><div class="compare-selects"><label for="baseline">Baseline<select id="baseline"></select></label><span class="versus">vs</span><label for="candidate">Challenger<select id="candidate"></select></label></div></section>
+        <div id="metrics" class="metrics"></div>
+        <section class="panel pressure-panel"><div class="chart-heading"><div><h3>Request pressure</h3><p>Attempts per 100 ms · both charts use the same scale</p></div><span class="legend"><i class="initial-key"></i> first attempt <i class="retry-key"></i> retry <i class="outage-key"></i> outage</span></div><div id="pressure-charts"></div><p id="comparison-insight" class="insight"></p></section>
+        <section class="panel timeline-panel"><div class="chart-heading"><div><p class="eyebrow">02 / FOLLOW THE ATTEMPTS</p><h3>Every client has a story.</h3><p>Pick a row to inspect its attempts. Color marks the response.</p></div><select id="timeline-policy" aria-label="Policy shown in client timeline"></select></div><div class="playback"><button id="play" class="play-button" aria-label="Replay simulation">▶ <span>Replay</span></button><label class="sr-only" for="playhead">Simulation time</label><input id="playhead" type="range" min="0" max="1000" value="1000" step="1"><output id="playhead-label">0.00 s</output></div><div id="raster"></div><div class="raster-footer"><span id="raster-caption"></span><span class="legend"><i class="success-key"></i> success <i class="outage-result-key"></i> outage <i class="overload-key"></i> busy <i class="deadline-key"></i> deadline</span></div><div id="client-inspector" class="client-inspector"></div></section>
+        <section class="panel all-policies"><div class="chart-heading"><div><p class="eyebrow">03 / THE TRADEOFFS</p><h3>There is no universal winner.</h3><p>Read success and latency together. p95 includes successful clients only.</p></div><button id="export-csv" class="button button-light">↓ Attempt CSV</button></div><div class="table-scroll"><table><thead><tr><th scope="col">Policy</th><th scope="col">Completed</th><th scope="col">Attempts</th><th scope="col">Amplification</th><th scope="col">p95 / success</th><th scope="col">Peak retries¹</th></tr></thead><tbody id="policy-table"></tbody></table></div><p class="table-note">¹ Maximum retries starting in a 100 ms bucket, excluding initial attempts. All five policies use the same scenario and initial arrivals.</p></section>
+        <div class="export-strip"><div><strong>Make the experiment portable.</strong><p>Share the parameters, or keep a snapshot for your next design review.</p></div><button id="export-report" class="button button-light">↓ HTML report</button></div>
+      </div>
+    </div>
+  </main>
+  <footer class="wrap site-footer"><span class="footer-brand">backoff lab <span> / </span> built for the curious engineer.</span><span>No uploads. No analytics. Just a seeded experiment. <a href="./LICENSE">MIT licensed ↗</a></span></footer>
+  <noscript><div class="notice">Backoff Lab needs JavaScript to run its local simulation. Enable JavaScript, or use the Node.js CLI in this repository.</div></noscript>
+</body>
+</html>
