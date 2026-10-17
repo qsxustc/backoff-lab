@@ -1,16 +1,45 @@
-# Backoff Lab
+<p align="center">
+  <img src="assets/favicon.svg" width="72" height="72" alt="Backoff Lab 标志">
+</p>
+<h1 align="center">Backoff Lab</h1>
+<p align="center"><strong>看见每一次重试。</strong><br>交互式理解重试风暴、指数退避与随机抖动。</p>
+<p align="center">
+  <a href="https://github.com/qsxustc/backoff-lab/actions/workflows/ci.yml"><img src="https://github.com/qsxustc/backoff-lab/actions/workflows/ci.yml/badge.svg" alt="CI 状态"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-5d6bc4" alt="MIT 开源协议"></a>
+  <a href="#本地运行"><img src="https://img.shields.io/badge/runtime_dependencies-0-26a685" alt="零运行时依赖"></a>
+</p>
+<p align="center">
+  <strong><a href="https://qsxustc.github.io/backoff-lab/">在线体验 →</a></strong>
+  &nbsp;·&nbsp; <a href="https://github.com/qsxustc/backoff-lab/releases/tag/v1.0.0">下载 v1.0.0</a>
+  &nbsp;·&nbsp; <a href="README.md">English</a>
+  &nbsp;·&nbsp; <a href="docs/model.md">模拟模型</a>
+</p>
 
-**看见每一次重试，理解惊群效应。**
+服务已经恢复，几百个客户端同时重试，**为什么请求还是不断失败？**
 
-[在线 Demo](https://qsxustc.github.io/backoff-lab/) · [GitHub 仓库](https://github.com/qsxustc/backoff-lab) · [CI 状态](https://github.com/qsxustc/backoff-lab/actions/workflows/ci.yml) · [English](README.md) · [模拟模型](docs/model.md) · [贡献指南](CONTRIBUTING.md)
+在 Backoff Lab 中，你可以对比五种重试策略，看请求如何扎堆或分散，再选中一个客户端，逐次追踪失败、等待与成功。保留随机种子，就能把同一个实验交给团队复现。
 
-Backoff Lab 是一个交互式的重试策略显微镜：让几百个客户端同时面对一个正在恢复的服务，对比五种重试策略，再选中一个客户端，追踪它从首次失败到最终结果的完整过程。
+[![Backoff Lab 实际操作演示：对比同步指数退避与 Full jitter，回放时间线并检查单个客户端的重试过程](assets/demo.gif)](https://qsxustc.github.io/backoff-lab/)
 
-浏览器应用、命令行工具和导出结果共用同一个确定性模拟引擎。修改参数、保留随机种子，就能把同一个实验交给团队复现。
+<p align="center"><em>来自真实应用的操作录屏，点击即可亲自实验。</em> · <a href="assets/demo.jpg">查看静态截图</a></p>
 
-![Backoff Lab：对比请求压力并查看逐客户端重试轨迹](assets/demo.jpg)
+## 一个场景，看见差别
 
-<p align="center"><img src="assets/timeline.jpg" alt="Inspect every retry and its actual waiting time" width="1000"></p>
+内置的 **Recovery burst** 场景让 120 个客户端同时请求一个故障 1.5 秒、恢复后拥有 12 个并发槽位的服务。随机种子为 **42**，实验可以重复运行。
+
+| 策略 | 完成的客户端 | 总尝试次数 |
+| --- | ---: | ---: |
+| 指数退避 | 48 / 120 | 888 |
+| Full jitter | 120 / 120 | 689 |
+
+这是[指定场景](examples/recovery.json)下的结果，不代表某种策略永远更好。调整并发容量、截止时间或随机种子，继续探索不同取舍。尝试次数包含首次请求；**p95 仅统计成功的客户端**。
+
+## 它能帮你做什么？
+
+- **直观解释惊群效应**：在相同刻度下比较请求压力，回放整个恢复过程。
+- **查看单个客户端的经历**：选中任意客户端，检查请求时间、失败原因与实际等待时长。
+- **复现设计讨论中的实验**：分享带随机种子的场景链接，导出原始请求记录，或附上独立报告。
+- **随手运行**：浏览器与 Node.js CLI 共用确定性模拟引擎，无需 API Key、注册账户或安装包依赖。
 
 ## 本地运行
 
@@ -53,6 +82,13 @@ npm run dev -- --port 4174
 - **可脚本化引擎**：通过命令行运行，或直接以 ES Module 导入。
 
 所有计算均在本地完成。应用不含埋点、外部字体或第三方运行时依赖。界面为英文，仓库提供中英文说明。
+
+<details>
+<summary>查看逐客户端检查界面</summary>
+
+![查看每次重试及实际等待时间](assets/timeline.jpg)
+
+</details>
 
 ## 命令行使用
 
@@ -121,7 +157,7 @@ npm run preview
 | `examples/recovery.json` | 可复现的初始场景 |
 | `docs/model.md` | 模型契约与适用边界 |
 
-开发规范见 [CONTRIBUTING.md](CONTRIBUTING.md)，发布步骤和宣传草稿见 [docs/launch.md](docs/launch.md)。
+开发规范见 [CONTRIBUTING.md](CONTRIBUTING.md)，版本记录见 [CHANGELOG.md](CHANGELOG.md)，发布步骤和宣传草稿见 [docs/launch.md](docs/launch.md)。有难以解释的重试场景？欢迎带着场景或问题[提交 Issue](https://github.com/qsxustc/backoff-lab/issues)。
 
 ## 背景与相关项目
 

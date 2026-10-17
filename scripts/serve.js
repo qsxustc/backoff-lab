@@ -48,6 +48,7 @@ const mimeTypes = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.webp': 'image/webp',
+  '.gif': 'image/gif',
   '.ico': 'image/x-icon',
   '.woff2': 'font/woff2',
 };
@@ -77,7 +78,7 @@ const server = http.createServer(async (request, response) => {
     // Development only serves the same public inputs that the static build uses.
     const firstSegment = relativePath.split('/')[0];
     // Apply the same allowlist to previews, even if unrelated files exist in dist/.
-    if (!['index.html', 'styles.css', 'README.md', 'README.zh-CN.md', 'CONTRIBUTING.md', 'LICENSE', 'src', 'assets', 'docs', 'examples'].includes(firstSegment)) {
+    if (!['index.html', 'styles.css', 'README.md', 'README.zh-CN.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'LICENSE', 'src', 'assets', 'docs', 'examples'].includes(firstSegment)) {
       fail(404, 'Not found');
       return;
     }

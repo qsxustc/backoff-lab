@@ -1,14 +1,45 @@
-# Backoff Lab
+<p align="center">
+  <img src="assets/favicon.svg" width="72" height="72" alt="Backoff Lab logo">
+</p>
+<h1 align="center">Backoff Lab</h1>
+<p align="center"><strong>See every retry.</strong><br>An interactive microscope for retry storms, backoff, and jitter.</p>
+<p align="center">
+  <a href="https://github.com/qsxustc/backoff-lab/actions/workflows/ci.yml"><img src="https://github.com/qsxustc/backoff-lab/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-5d6bc4" alt="License: MIT"></a>
+  <a href="#try-it-locally"><img src="https://img.shields.io/badge/runtime_dependencies-0-26a685" alt="Zero runtime dependencies"></a>
+</p>
+<p align="center">
+  <strong><a href="https://qsxustc.github.io/backoff-lab/">Try the live demo →</a></strong>
+  &nbsp;·&nbsp; <a href="https://github.com/qsxustc/backoff-lab/releases/tag/v1.0.0">Download v1.0.0</a>
+  &nbsp;·&nbsp; <a href="README.zh-CN.md">简体中文</a>
+  &nbsp;·&nbsp; <a href="docs/model.md">How the model works</a>
+</p>
 
-**See every retry. Understand the thundering herd.**
+A service comes back online. Hundreds of clients retry together. **Why does recovery still fail?**
 
-[Live demo](https://qsxustc.github.io/backoff-lab/) · [GitHub](https://github.com/qsxustc/backoff-lab) · [CI](https://github.com/qsxustc/backoff-lab/actions/workflows/ci.yml) · [简体中文](README.zh-CN.md) · [Simulation model](docs/model.md) · [Contributing](CONTRIBUTING.md)
+Backoff Lab lets you see the answer: compare five retry policies, watch requests cluster or spread, then click a client to follow every failure, wait, and success. Keep the seed and share the exact experiment with your team.
 
-Backoff Lab is an interactive microscope for retry policies. Put hundreds of clients in front of one recovering service, compare five ways to try again, and follow an individual request from its first failure to its final outcome.
+[![A recorded Backoff Lab walkthrough comparing synchronized exponential retries with full jitter, replaying the timeline, and inspecting one client's attempts](assets/demo.gif)](https://qsxustc.github.io/backoff-lab/)
 
-The browser app, command-line tool, and exported results use the same deterministic simulation. Change a parameter, keep the seed, and share the experiment with your team.
+<p align="center"><em>Real app recording. Click to run the experiment yourself.</em> · <a href="assets/demo.jpg">Static screenshot</a></p>
 
-![Backoff Lab comparing request pressure and individual client attempts](assets/demo.jpg)
+## One scenario, a visible difference
+
+In the included **Recovery burst** scenario, 120 clients hit a service that is down for 1.5 seconds, then has 12 concurrent slots. All clients arrive together; seed **42** makes the experiment repeatable.
+
+| Policy | Clients completed | Total attempts |
+| --- | ---: | ---: |
+| Exponential backoff | 48 / 120 | 888 |
+| Full jitter | 120 / 120 | 689 |
+
+Those are results for [this scenario](examples/recovery.json), not a universal ranking. Change the capacity, deadline, or seed and explore the tradeoffs. Attempts include each client's first request; **p95 counts successful clients only**.
+
+## Why keep this in your toolbox?
+
+- **Explain the thundering herd visually.** Compare request pressure on the same scale and replay the recovery.
+- **Inspect the individual experience.** Select any client to see when it retried, why it failed, and how long it actually waited.
+- **Make a design discussion reproducible.** Share a seeded scenario URL, export the raw attempts, or attach a standalone report.
+- **Use it anywhere.** The browser and Node.js CLI share one deterministic engine. No API keys, account, or package installation required.
 
 ## Try it locally
 
@@ -52,7 +83,12 @@ Links preserve the scenario parameters and seed. Policy selections, the selected
 
 Everything runs locally. The app includes no analytics, external fonts, or third-party runtime dependencies.
 
+<details>
+<summary>See the client inspector</summary>
+
 ![Inspect every retry and its actual waiting time](assets/timeline.jpg)
+
+</details>
 
 ## Use the CLI
 
@@ -121,7 +157,7 @@ Pushes to `main` run the [GitHub Pages deployment workflow](https://github.com/q
 | `examples/recovery.json` | A reproducible starting scenario |
 | `docs/model.md` | The simulation contract and its boundaries |
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for development guidance and [docs/launch.md](docs/launch.md) for the release checklist and announcement drafts.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development guidance, [CHANGELOG.md](CHANGELOG.md) for version history, and [docs/launch.md](docs/launch.md) for the release checklist and announcement drafts. Have a retry pattern that is hard to explain? [Open an issue](https://github.com/qsxustc/backoff-lab/issues) with a scenario or a question.
 
 ## Background and related work
 

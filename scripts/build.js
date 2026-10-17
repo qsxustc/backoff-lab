@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const destination = path.join(root, 'dist');
 // Keep the public roots in sync with scripts/serve.js.
-const files = ['index.html', 'styles.css', 'README.md', 'README.zh-CN.md', 'CONTRIBUTING.md', 'LICENSE'];
+const files = ['index.html', 'styles.css', 'README.md', 'README.zh-CN.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'LICENSE'];
 const directories = ['src', 'assets', 'docs', 'examples'];
 
 async function copyPublic(source, target, expectedType) {

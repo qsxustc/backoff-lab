@@ -20,6 +20,7 @@ async function fixture() {
     'README.md': '# Backoff Lab',
     'README.zh-CN.md': '# 退避实验室',
     'CONTRIBUTING.md': '# Contributing',
+    'CHANGELOG.md': '# Changelog',
     LICENSE: 'MIT License',
     'src/app.js': 'export const name = "Backoff Lab";',
     'assets/icon.svg': '<svg xmlns="http://www.w3.org/2000/svg"/>',
@@ -44,7 +45,7 @@ test('build includes public documentation and examples, replacing an older build
     await writeFile(path.join(directory, 'dist', 'obsolete.txt'), 'old build');
     const result = build(directory);
     assert.equal(result.status, 0, result.stderr);
-    for (const name of ['index.html', 'README.md', 'README.zh-CN.md', 'CONTRIBUTING.md', 'LICENSE', 'docs/model.md', 'examples/scenario.json', 'src/app.js']) {
+    for (const name of ['index.html', 'README.md', 'README.zh-CN.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'LICENSE', 'docs/model.md', 'examples/scenario.json', 'src/app.js']) {
       assert.equal(await readFile(path.join(directory, 'dist', name), 'utf8'), await readFile(path.join(directory, name), 'utf8'));
     }
     for (const name of ['obsolete.txt', 'package.json', 'scripts/build.js', '.env', 'assets/.hidden']) {
@@ -149,7 +150,7 @@ test('development and preview servers expose public files and reject private pat
       await symlink(path.join(directory, '.env'), path.join(publicRoot, 'assets', 'link.txt'));
       const server = await startServer(directory, useDist);
       try {
-        for (const name of ['/', '/README.md', '/README.zh-CN.md', '/CONTRIBUTING.md', '/LICENSE', '/docs/model.md', '/examples/scenario.json', '/src/app.js']) {
+        for (const name of ['/', '/README.md', '/README.zh-CN.md', '/CONTRIBUTING.md', '/CHANGELOG.md', '/LICENSE', '/docs/model.md', '/examples/scenario.json', '/src/app.js']) {
           const result = await request(server.port, name);
           assert.equal(result.status, 200, name);
           assert.ok(Number(result.headers['content-length']) > 0);
